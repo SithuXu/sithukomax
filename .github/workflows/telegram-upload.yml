@@ -1,0 +1,28 @@
+name: Upload Files to Telegram
+
+on:
+  workflow_dispatch:
+    inputs:
+      file_url:
+        description: 'URL of the file to download and send'
+        required: true
+
+jobs:
+  upload-to-telegram:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Download file
+        run: |
+          wget "${{ github.event.inputs.file_url }}" -O downloaded.file
+
+      - name: Upload file to Telegram
+        uses: xz-dev/TelegramFileUploader@v1
+        with:
+          to-who: '<your_chat_id_or_username>'
+          message: 'Here is your file!'
+          files: downloaded.file
+        env:
+          API_ID: ${{ secrets.API_ID }}
+          API_HASH: ${{ secrets.API_HASH }}
+          BOT_TOKEN: ${{ secrets.BOT_TOKEN }}
+          
