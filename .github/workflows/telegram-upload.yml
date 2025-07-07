@@ -18,7 +18,7 @@ jobs:
       - name: Upload file to Telegram
         uses: xz-dev/TelegramFileUploader@v1
         with:
-          to-who: '<your_chat_id_or_username>'
+          to-who: ${{ secrets.TELEGRAM_CHAT_ID }}
           message: 'Here is your file!'
           files: downloaded.file
         env:
